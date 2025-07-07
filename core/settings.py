@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv("SECRET_KEY"))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = str(os.getenv("DEBUG"))
+DEBUG = True
 
 ALLOWED_HOSTS = str(os.getenv("ALLOWED_HOSTS")).split(" ")
 
@@ -140,8 +140,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_build", "static")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = "users.CustomUser"
-
 APPEND_SLASH = False
 
 CORS_ORIGIN_ALLOW_ALL = False
@@ -164,3 +162,5 @@ EMAIL_HOST_PASSWORD = str(os.getenv("EMAIL_HOST_PASSWORD"))
 
 # GOOGLE_CHAT_WEBHOOK_URL = str(os.getenv("GOOGLE_CHAT_WEBHOOK_URL"))
 GOOGLE_CHAT_WEBHOOK_URL = "https://chat.googleapis.com/v1/spaces/AAAA7zRTlG8/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=FREyCcFJ7KoTKlloG1kNsHSlxwU67VO3k1bTNxFyh10"
+
+NINJA_PAGINATION_PER_PAGE = 50

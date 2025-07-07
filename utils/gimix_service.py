@@ -29,3 +29,15 @@ class GIMIxService:
         response = self.send_request(endpoint, "GET", token)
 
         return response
+
+    def get_users(self, token: str):
+        endpoint = "users"
+        return self.send_request(endpoint, "GET", token)
+
+    def get_departments(self, token: str):
+        endpoint = "departments"
+        return self.send_request(endpoint, "GET", token)
+
+    def get_groups(self, token: str):
+        endpoint = "groups"
+        return self.send_request(endpoint, "GET", token)

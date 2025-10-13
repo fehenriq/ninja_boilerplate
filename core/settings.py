@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "apps.users",
     "apps.audit_log",
     "apps.notification",
+    "apps.rate_limit",
 ]
 
 MIDDLEWARE = [

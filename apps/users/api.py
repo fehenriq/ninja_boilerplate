@@ -51,10 +51,19 @@ def retrieve_group(request, group_id: uuid.UUID):
     return group_service.get_group(group_id)
 
 
-@group_router.get("/{group_id}/users", response=list[UserGroupSchema])
+@group_router.get("/{group_id}/users", response=list[UserGroupSchema], auth=None)
 def retrieve_users_in_group(request, group_id: uuid.UUID):
-    decode_jwt_token(request.headers.get("Authorization"))
     return group_service.get_users_in_group(group_id)
+
+
+@group_router.get("/users/admins", response=list[UserGroupSchema], auth=None)
+def retrieve_users_admins(request):
+    return group_service.get_admin_users()
+
+
+@department_router.get("", response=list[DepartmentSchema], auth=None)
+def list_departments(request, company: str = None):
+    return department_service.list_departments(company=company)
 
 
 @department_router.post("/sync")

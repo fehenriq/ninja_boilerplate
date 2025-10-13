@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
+import ssl
 from pathlib import Path
 
 import dj_database_url
@@ -164,3 +165,12 @@ EMAIL_HOST_PASSWORD = str(os.getenv("EMAIL_HOST_PASSWORD"))
 GOOGLE_CHAT_WEBHOOK_URL = "https://chat.googleapis.com/v1/spaces/AAAA7zRTlG8/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=FREyCcFJ7KoTKlloG1kNsHSlxwU67VO3k1bTNxFyh10"
 
 NINJA_PAGINATION_PER_PAGE = 50
+
+# Celery
+
+CELERY_BROKER_URL = str(os.getenv("REDIS_URL"))
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_BROKER_USE_SSL = {"ssl_cert_reqs": ssl.CERT_NONE}
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 4 * 1024 * 1024

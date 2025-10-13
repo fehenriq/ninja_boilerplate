@@ -1,9 +1,10 @@
 import uuid
 from http import HTTPStatus
 
+from apps.users.repositories.user_repository import UserRepository
 from ninja.errors import HttpError
 
-from apps.users.models import Group, User
+from apps.users.models import User
 from apps.users.schema import UserSchema
 from apps.users.services.department_service import DepartmentService
 from apps.users.services.group_service import GroupService
@@ -15,9 +16,13 @@ class UserService:
         self.gimix_service = GIMIxService()
         self.department_service = DepartmentService()
         self.group_service = GroupService()
+        self.repository = UserRepository()
 
     def get_user_by_id(self, user_id: uuid.UUID) -> User:
-        return User.objects.filter(pk=user_id).first()
+        return self.repository.get_by_id(user_id)
+
+    def get_user_by_email(self, email: str) -> User:
+        return self.repository.get_by_email(email)
 
     def get_user(self, user_id: uuid.UUID) -> UserSchema:
         if not (user := self.get_user_by_id(user_id)):
@@ -27,13 +32,11 @@ class UserService:
 
     def sync_users(self, token: str):
         users = self.gimix_service.get_users(token)
-
         for usr in users.get("users", []):
             department_data = usr["department"]
             department = self.department_service.get_department(department_data["id"])
-
-            user, _ = User.objects.update_or_create(
-                id=uuid.UUID(usr["id"]),
+            user, _ = self.repository.update_or_create(
+                pk=uuid.UUID(usr["id"]),
                 defaults={
                     "email": usr["email"],
                     "name": usr["name"],
@@ -44,7 +47,5 @@ class UserService:
                     "picture": usr["picture"],
                 },
             )
-
             groups_list = [group["id"] for group in usr["groups"]]
-
-            user.groups.set(Group.objects.filter(id__in=groups_list))
+            self.repository.set_groups(user, groups_list)

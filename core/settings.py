@@ -46,9 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "ninja",
     "corsheaders",
-    "apps.authentication",
     "apps.users",
-    "apps.audit_log",
     "apps.notification",
     "apps.rate_limit",
 ]
@@ -62,7 +60,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-    "apps.audit_log.middleware.AuditLogMiddleware",
     "apps.notification.middleware.ErrorNotificationMiddleware",
 ]
 

@@ -5,7 +5,7 @@ import requests
 
 class GIMIxService:
     def __init__(self):
-        self.base_url = "https://gimix-api.vercel.app/api"
+        self.base_url = "https://gimix-api.onrender.com/api"
 
     def send_request(self, endpoint: str, method: str, token: str):
         url = f"{self.base_url}/{endpoint}"
